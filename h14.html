@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotel Sales Flow</title>
+
+<style>
+  :root{
+    --bg0:#07080a;
+    --bg1:#0c0f14;
+    --panel: rgba(255,255,255,.06);
+    --panel2: rgba(255,255,255,.08);
+    --border: rgba(255,255,255,.12);
+    --border2: rgba(255,255,255,.18);
+    --text:#f5f7fb;
+    --muted: rgba(245,247,251,.65);
+    --muted2: rgba(245,247,251,.45);
+
+    --ok:#22c55e;
+    --warn:#f59e0b;
+    --bad:#ef4444;
+
+    --shadow: 0 20px 70px rgba(0,0,0,.45);
+    --shadow2: 0 10px 30px rgba(0,0,0,.35);
+    --radius: 20px;
+    --radius2: 16px;
+
+    --focus: 0 0 0 4px rgba(255,255,255,.10);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 700px at 20% -10%, rgba(255,255,255,.10), transparent 55%),
+      radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.08), transparent 55%),
+      radial-gradient(900px 700px at 60% 110%, rgba(255,255,255,.06), transparent 50%),
+      linear-gradient(180deg, var(--bg0), var(--bg1));
+    letter-spacing: .2px;
+  }
+
+  .hidden{ display:none; }
+
+  .app{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Top bar */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin: 4px 0 16px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width: 220px;
+  }
+  .logo{
+    width:38px; height:38px;
+    border-radius: 14px;
+    background:
+      radial-gradient(14px 14px at 30% 35%, rgba(255,255,255,.35), transparent 60%),
+      linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow2);
+  }
+  .brand h1{
+    font-size: 14px;
+    margin:0;
+    font-weight: 700;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    color: rgba(245,247,251,.92);
+  }
+  .brand p{
+    margin:0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .shell{
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(900px 350px at 30% 0%, rgba(255,255,255,.10), transparent 65%),
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr;
+  }
+
+  .card{
+    padding: 18px;
+  }
+
+  /* Header of screens */
+  .header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    padding: 18px 18px 0;
+  }
+  .header h2, .header h3{
+    margin:0;
+    font-weight: 750;
+    letter-spacing: .2px;
+  }
+  .header h2{ font-size: 18px; }
+  .header h3{ font-size: 16px; }
+  .sub{
+    margin-top:6px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .content{
+    padding: 14px 18px 18px;
+  }
+
+  /* Buttons */
+  button{
+    appearance:none;
+    border: 1px solid var(--border);
+    color: rgba(245,247,251,.92);
+    background:
+      radial-gradient(140px 60px at 30% 10%, rgba(255,255,255,.16), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 650;
+    cursor:pointer;
+    transition: transform .08s ease, border-color .15s ease, background .15s ease, opacity .15s ease;
+    box-shadow: 0 10px 24px rgba(0,0,0,.22);
+  }
+  button:hover{ border-color: var(--border2); }
+  button:active{ transform: translateY(1px); }
+  button:focus{ outline:none; box-shadow: var(--shadow2), var(--focus); }
+
+  .btn-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    border-color: rgba(255,255,255,.22);
+    background:
+      radial-gradient(170px 70px at 30% 10%, rgba(255,255,255,.22), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  }
+  .btn-ghost{
+    background: rgba(255,255,255,.03);
+    box-shadow:none;
+  }
+  .btn-danger{
+    border-color: rgba(239,68,68,.28);
+    background:
+      radial-gradient(170px 70px at 30% 10%, rgba(239,68,68,.18), transparent 62%),
+      linear-gradient(180deg, rgba(239,68,68,.10), rgba(255,255,255,.02));
+  }
+
+  /* Inputs */
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom: 12px;
+  }
+  label{
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 650;
+    letter-spacing: .2px;
+  }
+  input{
+    width:100%;
+    padding: 12px 12px;
+    font-size: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(300px 120px at 20% 0%, rgba(255,255,255,.08), transparent 60%),
+      rgba(0,0,0,.22);
+    color: rgba(245,247,251,.92);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
+  }
+  input::placeholder{ color: rgba(245,247,251,.35); }
+  input:focus{
+    outline:none;
+    border-color: rgba(255,255,255,.24);
+    box-shadow: var(--focus);
+  }
+
+  /* Divider */
+  .divider{
+    height:1px;
+    background: rgba(255,255,255,.10);
+    margin: 14px 0;
+  }
+
+  /* Guest list */
+  .list{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 920px){ .list{ grid-template-columns: repeat(2, 1fr);} }
+  @media (max-width: 560px){ .list{ grid-template-columns: 1fr;} }
+
+  .guest-card{
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.09), transparent 62%),
+      rgba(255,255,255,.03);
+    padding: 12px;
+    box-shadow: 0 12px 26px rgba(0,0,0,.22);
+  }
+  .guest-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom: 10px;
+  }
+  .room{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .pill{
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: .4px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: rgba(245,247,251,.90);
+    background: rgba(255,255,255,.04);
+    white-space:nowrap;
+  }
+  .pill.ok{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.10); }
+  .pill.warn{ border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.10); }
+  .pill.bad{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10); }
+
+  .mini{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top: 8px;
+  }
+  .mini .tag{
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    padding: 5px 8px;
+    border-radius: 999px;
+  }
+
+  .guest-actions{
+    display:flex;
+    gap:8px;
+    margin-top: 10px;
+  }
+  .guest-actions button{
+    flex:1;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    box-shadow:none;
+  }
+
+  /* Stages */
+  .stage-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 760px){ .stage-grid{ grid-template-columns: 1fr; } }
+
+  .stage{
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    cursor:pointer;
+    background:
+      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.10), transparent 62%),
+      rgba(255,255,255,.03);
+    box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    transition: transform .08s ease, border-color .15s ease;
+  }
+  .stage:hover{ border-color: var(--border2); }
+  .stage:active{ transform: translateY(1px); }
+
+  .stage-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .stage h4{
+    margin:0;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .2px;
+  }
+  .stage p{
+    margin:6px 0 0;
+    font-size: 12px;
+    color: var(--muted);
+    line-height:1.35;
+  }
+
+  .progress{
+    margin-top: 12px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    overflow:hidden;
+  }
+  .bar{
+    height:100%;
+    width: 0%;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,255,255,.10));
+    border-right: 1px solid rgba(255,255,255,.14);
+  }
+
+  /* Flow list */
+  .flow-list{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+  }
+  .item{
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(300px 140px at 20% 0%, rgba(255,255,255,.09), transparent 62%),
+      rgba(255,255,255,.03);
+    box-shadow: 0 12px 26px rgba(0,0,0,.20);
+    position:relative;
+    overflow:hidden;
+  }
+  .item.dim{
+    opacity: .40;
+    filter: grayscale(.1);
+  }
+  .item.active{
+    border-color: rgba(255,255,255,.26);
+  }
+  .item.active::before{
+    content:"";
+    position:absolute;
+    inset:-40px -60px auto auto;
+    width: 220px;
+    height: 120px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), transparent 65%);
+    transform: rotate(12deg);
+    pointer-events:none;
+  }
+  .item strong{
+    display:block;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .1px;
+    margin-bottom: 10px;
+  }
+  .actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .actions button{
+    flex:1;
+    min-width: 160px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    box-shadow:none;
+    font-weight: 800;
+    letter-spacing: .2px;
+  }
+  .actions .accept{
+    border-color: rgba(34,197,94,.30);
+    background:
+      radial-gradient(170px 70px at 30% 10%, rgba(34,197,94,.22), transparent 62%),
+      linear-gradient(180deg, rgba(34,197,94,.12), rgba(255,255,255,.02));
+  }
+  .actions .decline{
+    border-color: rgba(245,158,11,.30);
+    background:
+      radial-gradient(170px 70px at 30% 10%, rgba(245,158,11,.22), transparent 62%),
+      linear-gradient(180deg, rgba(245,158,11,.12), rgba(255,255,255,.02));
+  }
+
+  .badge{
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(245,247,251,.80);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .dot{
+    width:10px;height:10px;border-radius:999px;
+    background: rgba(255,255,255,.28);
+    border: 1px solid rgba(255,255,255,.18);
+  }
+  .badge.ok .dot{ background: rgba(34,197,94,.70); border-color: rgba(34,197,94,.35); }
+  .badge.warn .dot{ background: rgba(245,158,11,.80); border-color: rgba(245,158,11,.35); }
+
+  /* Toast */
+  .toast{
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15,17,21,.72);
+    border: 1px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(245,247,251,.92);
+    padding: 10px 12px;
+    border-radius: 14px;
+    box-shadow: var(--shadow2);
+    font-size: 13px;
+    display:none;
+    max-width: 92vw;
+  }
+
+  /* Small helpers */
+  .row{
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .grow{ flex:1; }
+  .right{ margin-left:auto; }
+
+  .muted{ color: var(--muted); }
+  .kpi{
+    display:flex; gap:10px; flex-wrap:wrap;
+    margin-top: 10px;
+  }
+  .kpi .box{
+    flex:1;
+    min-width: 160px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .kpi .box b{ display:block; font-size: 16px; }
+  .kpi .box span{ color: var(--muted); font-size: 12px; }
+
+  a{ color: inherit; }
+</style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>Recepción</h1>
+          <p>Checklist guiado para vender más (sin campos ni complicaciones)</p>
+        </div>
+      </div>
+
+      <div class="row right">
+        <button class="btn-ghost" onclick="hardReset()">Reiniciar todo</button>
+      </div>
+    </div>
+
+    <div class="shell">
+      <!-- HOME -->
+      <div id="home">
+        <div class="header">
+          <div>
+            <h2>Inicio</h2>
+            <div class="sub">Elige una acción. La idea es que sea <b>rápido, repetible y controlable</b>.</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="btn-row">
+            <button class="btn-primary" onclick="showNew()">+ Nuevo huésped</button>
+            <button onclick="showSearch()">Buscar habitación</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="kpi">
+            <div class="box">
+              <b id="kpiActive">0</b>
+              <span>Huéspedes activos</span>
+            </div>
+            <div class="box">
+              <b id="kpiToday">—</b>
+              <span>Hoy (solo referencia)</span>
+            </div>
+            <div class="box">
+              <b id="kpiTips">2s</b>
+              <span>Tiempo objetivo por acción</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NUEVO -->
+      <div id="newGuest" class="hidden">
+        <div class="header">
+          <div>
+            <h3>Nuevo huésped</h3>
+            <div class="sub">Solo escribe la habitación. Sin nombre. Sin fricción.</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="field">
+            <label>Habitación</label>
+            <input id="roomInput" inputmode="numeric" placeholder="Ej: 205">
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" onclick="createGuest()">Crear y entrar</button>
+            <button class="btn-ghost" onclick="goHome()">Cancelar</button>
+          </div>
+
+          <div class="sub" style="margin-top:12px;">
+            Tip: si la habitación ya existe, te llevará a esa ficha para continuar.
+          </div>
+        </div>
+      </div>
+
+      <!-- BUSCAR -->
+      <div id="search" class="hidden">
+        <div class="header">
+          <div>
+            <h3>Huéspedes activos</h3>
+            <div class="sub">Busca por habitación y entra con 1 click.</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="field">
+            <label>Buscar</label>
+            <input id="searchInput" placeholder="Escribe: 101, 205, 12..." oninput="renderGuestList()">
+          </div>
+
+          <div id="guestList" class="list"></div>
+
+          <div class="divider"></div>
+
+          <div class="btn-row">
+            <button class="btn-ghost" onclick="goHome()">Volver</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPAS -->
+      <div id="stages" class="hidden">
+        <div class="header">
+          <div>
+            <h3>Habitación <span id="roomTitle" style="opacity:.92"></span></h3>
+            <div class="sub">Entra a una etapa. El sistema te marca progreso y qué falta.</div>
+          </div>
+          <div class="row">
+            <button class="btn-danger" onclick="deleteCurrent()">Borrar huésped</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="stage-grid">
+            <div class="stage" onclick="openStage('checkin')">
+              <div class="stage-top">
+                <div>
+                  <h4>Check-in</h4>
+                  <p>Primer minuto = más ventas. Guion corto, sin pensar.</p>
+                </div>
+                <div id="badge_checkin" class="pill">Pendiente</div>
+              </div>
+              <div class="progress"><div id="bar_checkin" class="bar"></div></div>
+            </div>
+
+            <div class="stage" onclick="openStage('stay')">
+              <div class="stage-top">
+                <div>
+                  <h4>Estadía</h4>
+                  <p>Upsell suave. Detecta oportunidades sin molestar.</p>
+                </div>
+                <div id="badge_stay" class="pill">Pendiente</div>
+              </div>
+              <div class="progress"><div id="bar_stay" class="bar"></div></div>
+            </div>
+
+            <div class="stage" onclick="openStage('checkout')">
+              <div class="stage-top">
+                <div>
+                  <h4>Check-out</h4>
+                  <p>Cierra ventas futuras: directo + reseña + retorno.</p>
+                </div>
+                <div id="badge_checkout" class="pill">Pendiente</div>
+              </div>
+              <div class="progress"><div id="bar_checkout" class="bar"></div></div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="btn-row">
+            <button class="btn-ghost" onclick="showSearch()">Cambiar habitación</button>
+            <button class="btn-ghost" onclick="goHome()">Salir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOW -->
+      <div id="flow" class="hidden">
+        <div class="header">
+          <div>
+            <h3 id="flowTitle"></h3>
+            <div class="sub" id="flowSub">Marca una opción y se habilita el siguiente ítem (flujo guiado).</div>
+          </div>
+          <div class="row">
+            <button class="btn-ghost" onclick="resetStage()">Reiniciar etapa</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <div id="flowItems" class="flow-list"></div>
+
+          <div class="divider"></div>
+
+          <div class="btn-row">
+            <button class="btn-ghost" onclick="backToStages()">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+<script>
+  const DATA = {
+    checkin: [
+      "¿Viaje de trabajo o descanso?",
+      "Ofrecer upgrade de habitación",
+      "Ofrecer desayuno",
+      "Estacionamiento o traslado"
+    ],
+    stay: [
+      "¿Todo bien con la habitación?",
+      "Ofrecer late check-out",
+      "Invitar a bar o restaurante",
+      "Experiencia o tour"
+    ],
+    checkout: [
+      "¿Cómo estuvo la estadía?",
+      "Late check-out hoy",
+      "Reservar directo",
+      "Pedir reseña"
+    ]
+  };
+
+  const KEY = "hotel-guests-modern";
+  let guests = JSON.parse(localStorage.getItem(KEY) || "{}");
+  let currentRoom = null;
+  let currentStage = null;
+
+  const qs = (id) => document.getElementById(id);
+
+  function save(){
+    localStorage.setItem(KEY, JSON.stringify(guests));
+    updateKPIs();
+  }
+
+  function toast(msg){
+    const t = qs("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=> t.style.display="none", 1400);
+  }
+
+  function hideAll(){
+    ["home","newGuest","search","stages","flow"].forEach(i => qs(i).classList.add("hidden"));
+  }
+  function goHome(){
+    hideAll();
+    qs("home").classList.remove("hidden");
+    updateKPIs();
+  }
+
+  function showNew(){
+    hideAll();
+    qs("roomInput").value = "";
+    qs("newGuest").classList.remove("hidden");
+    setTimeout(()=>qs("roomInput").focus(), 50);
+  }
+
+  function showSearch(){
+    hideAll();
+    qs("searchInput").value = "";
+    renderGuestList();
+    qs("search").classList.remove("hidden");
+    setTimeout(()=>qs("searchInput").focus(), 50);
+  }
+
+  function normalizeRoom(v){
+    return (v || "").trim();
+  }
+
+  function createGuest(){
+    const room = normalizeRoom(qs("roomInput").value);
+    if(!room) return alert("Ingresa habitación");
+
+    // si existe, no sobrescribimos: continuamos
+    if(!guests[room]){
+      guests[room] = { flows:{}, createdAt: Date.now() };
+      save();
+      toast("Huésped creado");
+    }else{
+      toast("Habitación existente: continuando");
+    }
+    openGuest(room);
+  }
+
+  function openGuest(room){
+    currentRoom = room;
+    qs("roomTitle").textContent = room;
+    hideAll();
+    qs("stages").classList.remove("hidden");
+    updateStageCards();
+  }
+
+  function deleteCurrent(){
+    if(!currentRoom) return;
+    const ok = confirm("¿Borrar esta habitación y su progreso?");
+    if(!ok) return;
+    delete guests[currentRoom];
+    save();
+    toast("Huésped borrado");
+    currentRoom = null;
+    showSearch();
+  }
+
+  function renderGuestList(){
+    const list = qs("guestList");
+    list.innerHTML = "";
+
+    const q = (qs("searchInput").value || "").trim().toLowerCase();
+    const rooms = Object.keys(guests)
+      .filter(r => r.toLowerCase().includes(q))
+      .sort((a,b)=> a.localeCompare(b, undefined, {numeric:true}));
+
+    if(rooms.length === 0){
+      list.innerHTML = `<div class="muted">No hay huéspedes activos.</div>`;
+      return;
+    }
+
+    rooms.forEach(r=>{
+      const status = overallStatus(r);
+      const c = document.createElement("div");
+      c.className = "guest-card";
+
+      const pillClass = status.kind === "ok" ? "ok" : status.kind === "warn" ? "warn" : "";
+      c.innerHTML = `
+        <div class="guest-top">
+          <div class="room">
+            <div class="pill">Hab. ${escapeHtml(r)}</div>
+          </div>
+          <div class="pill ${pillClass}">${escapeHtml(status.label)}</div>
+        </div>
+
+        <div class="mini">
+          <div class="tag">Check-in: ${stagePercent(r,'checkin')}%</div>
+          <div class="tag">Estadía: ${stagePercent(r,'stay')}%</div>
+          <div class="tag">Check-out: ${stagePercent(r,'checkout')}%</div>
+        </div>
+
+        <div class="guest-actions">
+          <button class="btn-primary" onclick="openGuest('${escapeAttr(r)}')">Continuar</button>
+          <button class="btn-danger" onclick="deleteGuest('${escapeAttr(r)}')">Borrar</button>
+        </div>
+      `;
+      list.appendChild(c);
+    });
+  }
+
+  function deleteGuest(room){
+    const ok = confirm(`¿Borrar habitación ${room} y su progreso?`);
+    if(!ok) return;
+    delete guests[room];
+    save();
+    toast("Huésped borrado");
+    renderGuestList();
+  }
+
+  function openStage(stage){
+    currentStage = stage;
+    hideAll();
+    qs("flowTitle").textContent =
+      (stage === "checkin" ? "Check-in" : stage === "stay" ? "Estadía" : "Check-out")
+      + " — Hab. " + currentRoom;
+
+    qs("flowSub").textContent = "Marca una opción y se habilita el siguiente ítem (flujo guiado).";
+    renderFlow();
+    qs("flow").classList.remove("hidden");
+  }
+
+  function backToStages(){
+    hideAll();
+    qs("stages").classList.remove("hidden");
+    updateStageCards();
+  }
+
+  function resetStage(){
+    if(!currentRoom || !currentStage) return;
+    const ok = confirm("¿Reiniciar esta etapa (se borran respuestas)?");
+    if(!ok) return;
+    guests[currentRoom].flows[currentStage] = {};
+    save();
+    toast("Etapa reiniciada");
+    renderFlow();
+  }
+
+  function renderFlow(){
+    const wrap = qs("flowItems");
+    wrap.innerHTML = "";
+
+    const flow = (guests[currentRoom].flows[currentStage] || {});
+    const next = nextIndex(flow);
+
+    DATA[currentStage].forEach((t,i)=>{
+      const state = flow[i] || "new";
+      const isActive = (i === next);
+      const isLocked = (i > next);
+
+      const d = document.createElement("div");
+      d.className = "item " + (isActive ? "active" : "dim");
+      d.innerHTML = `
+        <strong>${escapeHtml(t)}</strong>
+        <div class="actions">
+          <button class="accept" ${isLocked ? "disabled style='opacity:.45; cursor:not-allowed'" : ""} onclick="setState(${i},'ok')">
+            Aceptado
+          </button>
+          <button class="decline" ${isLocked ? "disabled style='opacity:.45; cursor:not-allowed'" : ""} onclick="setState(${i},'no')">
+            No aceptó
+          </button>
+        </div>
+
+        ${
+          state !== "new"
+          ? `<div class="badge ${state==='ok'?'ok':'warn'}">
+              <span class="dot"></span>
+              ${state==='ok' ? "Marcado: aceptado" : "Marcado: no aceptó"}
+            </div>`
+          : (isActive ? `<div class="badge"><span class="dot"></span>Siguiente acción</div>` : "")
+        }
+      `;
+      wrap.appendChild(d);
+    });
+
+    // si completó todo
+    if(next >= DATA[currentStage].length){
+      qs("flowSub").textContent = "Etapa completa ✅ Puedes volver o pasar a la siguiente.";
+    }
+  }
+
+  function nextIndex(flow){
+    for(let i=0;i<DATA[currentStage].length;i++){
+      if(!flow[i]) return i;
+    }
+    return 999;
+  }
+
+  function setState(i,val){
+    guests[currentRoom].flows[currentStage] ||= {};
+    // bloqueo por flujo: solo permite el próximo índice
+    const flow = guests[currentRoom].flows[currentStage];
+    const allowed = (i === firstMissing(flow));
+    if(!allowed){
+      toast("Sigue el orden (una por una)");
+      return;
+    }
+
+    flow[i] = val;
+    save();
+    if(val === "ok") toast("Aceptado");
+    else toast("No aceptó");
+    renderFlow();
+  }
+
+  function firstMissing(flow){
+    for(let i=0;i<DATA[currentStage].length;i++){
+      if(!flow[i]) return i;
+    }
+    return 999;
+  }
+
+  function stagePercent(room, stage){
+    const flow = (guests[room]?.flows?.[stage] || {});
+    const total = DATA[stage].length;
+    let done = 0;
+    for(let i=0;i<total;i++){
+      if(flow[i]) done++;
+    }
+    return Math.round((done/total)*100);
+  }
+
+  function stageStatus(room, stage){
+    const p = stagePercent(room, stage);
+    if(p === 0) return { label:"Pendiente", kind:"" };
+    if(p < 100) return { label:"En curso", kind:"warn" };
+    return { label:"Completo", kind:"ok" };
+  }
+
+  function overallStatus(room){
+    const a = stagePercent(room,'checkin');
+    const b = stagePercent(room,'stay');
+    const c = stagePercent(room,'checkout');
+    const avg = Math.round((a+b+c)/3);
+    if(avg === 0) return { label:"Pendiente", kind:"" };
+    if(avg < 100) return { label:"En curso", kind:"warn" };
+    return { label:"Completo", kind:"ok" };
+  }
+
+  function updateStageCards(){
+    if(!currentRoom) return;
+    ["checkin","stay","checkout"].forEach(stage=>{
+      const s = stageStatus(currentRoom, stage);
+      const badge = qs("badge_"+stage);
+      const bar = qs("bar_"+stage);
+      badge.textContent = s.label;
+      badge.className = "pill " + (s.kind ? s.kind : "");
+      bar.style.width = stagePercent(currentRoom, stage) + "%";
+    });
+  }
+
+  function updateKPIs(){
+    const n = Object.keys(guests).length;
+    qs("kpiActive").textContent = n;
+    const now = new Date();
+    qs("kpiToday").textContent = now.toLocaleDateString("es-CL", { weekday:"short", day:"2-digit", month:"short" });
+  }
+
+  function hardReset(){
+    const ok = confirm("¿Reiniciar TODO? (se borran todas las habitaciones y progreso)");
+    if(!ok) return;
+    guests = {};
+    save();
+    toast("Reiniciado");
+    goHome();
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function escapeAttr(str){
+    // para usar en onclick con comillas simples
+    return String(str).replaceAll("\\","\\\\").replaceAll("'","\\'");
+  }
+
+  // init
+  updateKPIs();
+  goHome();
+</script>
+</body>
+</html>
