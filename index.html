@@ -7,26 +7,26 @@
 
 <style>
   :root{
-    --bg0:#07080a;
-    --bg1:#0c0f14;
-    --panel: rgba(255,255,255,.06);
-    --panel2: rgba(255,255,255,.08);
-    --border: rgba(255,255,255,.12);
-    --border2: rgba(255,255,255,.18);
-    --text:#f5f7fb;
-    --muted: rgba(245,247,251,.65);
-    --muted2: rgba(245,247,251,.45);
+    --bg0:#0a0b0e;
+    --bg1:#15181d;
+    --panel: rgba(255,255,255,.04);
+    --panel2: rgba(255,255,255,.06);
+    --border: rgba(255,255,255,.10);
+    --border2: rgba(255,255,255,.22);
+    --text:#f3f5f8;
+    --muted: rgba(243,245,248,.62);
+    --muted2: rgba(243,245,248,.40);
 
     --ok:#22c55e;
     --warn:#f59e0b;
     --bad:#ef4444;
 
-    --shadow: 0 20px 70px rgba(0,0,0,.45);
-    --shadow2: 0 10px 30px rgba(0,0,0,.35);
+    --shadow: 0 30px 80px rgba(0,0,0,.55);
+    --shadow2: 0 12px 30px rgba(0,0,0,.45);
     --radius: 20px;
     --radius2: 16px;
 
-    --focus: 0 0 0 4px rgba(255,255,255,.10);
+    --focus: 0 0 0 4px rgba(255,255,255,.08);
   }
 
   *{ box-sizing:border-box; }
@@ -36,9 +36,9 @@
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
     color: var(--text);
     background:
-      radial-gradient(1200px 700px at 20% -10%, rgba(255,255,255,.10), transparent 55%),
-      radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.08), transparent 55%),
-      radial-gradient(900px 700px at 60% 110%, rgba(255,255,255,.06), transparent 50%),
+      radial-gradient(900px 520px at 16% -10%, rgba(255,255,255,.08), transparent 58%),
+      radial-gradient(700px 500px at 88% 6%, rgba(255,255,255,.06), transparent 60%),
+      radial-gradient(820px 620px at 50% 110%, rgba(255,255,255,.05), transparent 55%),
       linear-gradient(180deg, var(--bg0), var(--bg1));
     letter-spacing: .2px;
   }
@@ -92,8 +92,8 @@
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background:
-      radial-gradient(900px 350px at 30% 0%, rgba(255,255,255,.10), transparent 65%),
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      radial-gradient(900px 350px at 30% 0%, rgba(255,255,255,.08), transparent 66%),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
     box-shadow: var(--shadow);
     overflow:hidden;
   }
@@ -139,8 +139,8 @@
     border: 1px solid var(--border);
     color: rgba(245,247,251,.92);
     background:
-      radial-gradient(140px 60px at 30% 10%, rgba(255,255,255,.16), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      radial-gradient(160px 60px at 30% 10%, rgba(255,255,255,.14), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
     padding: 12px 14px;
     border-radius: 14px;
     font-size: 14px;
@@ -161,8 +161,8 @@
   .btn-primary{
     border-color: rgba(255,255,255,.22);
     background:
-      radial-gradient(170px 70px at 30% 10%, rgba(255,255,255,.22), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+      radial-gradient(170px 70px at 30% 10%, rgba(255,255,255,.20), transparent 62%),
+      linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
   }
   .btn-ghost{
     background: rgba(255,255,255,.03);
@@ -195,8 +195,8 @@
     border-radius: 14px;
     border: 1px solid var(--border);
     background:
-      radial-gradient(300px 120px at 20% 0%, rgba(255,255,255,.08), transparent 60%),
-      rgba(0,0,0,.22);
+      radial-gradient(300px 120px at 20% 0%, rgba(255,255,255,.06), transparent 60%),
+      rgba(0,0,0,.28);
     color: rgba(245,247,251,.92);
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
   }
@@ -227,10 +227,10 @@
     border-radius: 16px;
     border: 1px solid var(--border);
     background:
-      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.09), transparent 62%),
-      rgba(255,255,255,.03);
+      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.07), transparent 62%),
+      rgba(255,255,255,.02);
     padding: 12px;
-    box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    box-shadow: 0 12px 26px rgba(0,0,0,.28);
   }
   .guest-top{
     display:flex;
@@ -301,9 +301,9 @@
     border: 1px solid var(--border);
     cursor:pointer;
     background:
-      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.10), transparent 62%),
-      rgba(255,255,255,.03);
-    box-shadow: 0 12px 26px rgba(0,0,0,.22);
+      radial-gradient(260px 120px at 20% 0%, rgba(255,255,255,.08), transparent 62%),
+      rgba(255,255,255,.02);
+    box-shadow: 0 12px 26px rgba(0,0,0,.30);
     transition: transform .08s ease, border-color .15s ease;
   }
   .stage:hover{ border-color: var(--border2); }
@@ -332,7 +332,7 @@
     margin-top: 12px;
     height: 10px;
     border-radius: 999px;
-    background: rgba(255,255,255,.06);
+    background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.10);
     overflow:hidden;
   }
@@ -355,9 +355,9 @@
     border-radius: 16px;
     border: 1px solid var(--border);
     background:
-      radial-gradient(300px 140px at 20% 0%, rgba(255,255,255,.09), transparent 62%),
-      rgba(255,255,255,.03);
-    box-shadow: 0 12px 26px rgba(0,0,0,.20);
+      radial-gradient(300px 140px at 20% 0%, rgba(255,255,255,.08), transparent 62%),
+      rgba(255,255,255,.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,.30);
     position:relative;
     overflow:hidden;
   }
@@ -402,14 +402,14 @@
   .actions .accept{
     border-color: rgba(34,197,94,.30);
     background:
-      radial-gradient(170px 70px at 30% 10%, rgba(34,197,94,.22), transparent 62%),
-      linear-gradient(180deg, rgba(34,197,94,.12), rgba(255,255,255,.02));
+      radial-gradient(170px 70px at 30% 10%, rgba(34,197,94,.20), transparent 62%),
+      linear-gradient(180deg, rgba(34,197,94,.10), rgba(255,255,255,.02));
   }
   .actions .decline{
     border-color: rgba(245,158,11,.30);
     background:
-      radial-gradient(170px 70px at 30% 10%, rgba(245,158,11,.22), transparent 62%),
-      linear-gradient(180deg, rgba(245,158,11,.12), rgba(255,255,255,.02));
+      radial-gradient(170px 70px at 30% 10%, rgba(245,158,11,.20), transparent 62%),
+      linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,.02));
   }
 
   .badge{
@@ -463,9 +463,38 @@
     flex:1;
     min-width: 160px;
     border: 1px solid rgba(255,255,255,.10);
-    background: rgba(255,255,255,.03);
+    background: rgba(255,255,255,.02);
     border-radius: 16px;
     padding: 12px;
+  }
+
+  /* Flow layout */
+  .flow-layout{
+    display:grid;
+    grid-template-columns: 260px 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 900px){
+    .flow-layout{
+      grid-template-columns: 1fr;
+    }
+  }
+  .stage-nav{
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+  }
+  .stage-nav .stage{
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 18px 32px rgba(0,0,0,.35);
+  }
+  .stage-nav .stage.active{
+    border-color: rgba(255,255,255,.40);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 18px 40px rgba(0,0,0,.45);
+  }
+  .flow-main{
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
   }
   .kpi .box b{ display:block; font-size: 16px; }
   .kpi .box span{ color: var(--muted); font-size: 12px; }
@@ -646,7 +675,46 @@
         </div>
 
         <div class="content">
-          <div id="flowItems" class="flow-list"></div>
+          <div class="flow-layout">
+            <div class="stage-nav">
+              <div class="stage" data-stage="checkin" onclick="openStage('checkin')">
+                <div class="stage-top">
+                  <div>
+                    <h4>Check-in</h4>
+                    <p>Empieza bien la conversación.</p>
+                  </div>
+                  <div id="nav_badge_checkin" class="pill">Pendiente</div>
+                </div>
+                <div class="progress"><div id="nav_bar_checkin" class="bar"></div></div>
+              </div>
+
+              <div class="stage" data-stage="stay" onclick="openStage('stay')">
+                <div class="stage-top">
+                  <div>
+                    <h4>Estadía</h4>
+                    <p>Ventas fáciles sin presión.</p>
+                  </div>
+                  <div id="nav_badge_stay" class="pill">Pendiente</div>
+                </div>
+                <div class="progress"><div id="nav_bar_stay" class="bar"></div></div>
+              </div>
+
+              <div class="stage" data-stage="checkout" onclick="openStage('checkout')">
+                <div class="stage-top">
+                  <div>
+                    <h4>Check-out</h4>
+                    <p>Última oportunidad de cierre.</p>
+                  </div>
+                  <div id="nav_badge_checkout" class="pill">Pendiente</div>
+                </div>
+                <div class="progress"><div id="nav_bar_checkout" class="bar"></div></div>
+              </div>
+            </div>
+
+            <div class="flow-main">
+              <div id="flowItems" class="flow-list"></div>
+            </div>
+          </div>
 
           <div class="divider"></div>
 
@@ -820,18 +888,19 @@
   function openStage(stage){
     currentStage = stage;
     hideAll();
-    qs("stages").classList.remove("hidden");
     qs("flowTitle").textContent =
       (stage === "checkin" ? "Check-in" : stage === "stay" ? "Estadía" : "Check-out")
       + " — Hab. " + currentRoom;
 
     qs("flowSub").textContent = "Marca una opción y se habilita el siguiente ítem (flujo guiado).";
     renderFlow();
+    updateStageCards();
     qs("flow").classList.remove("hidden");
   }
 
   function backToStages(){
-    qs("flow").classList.add("hidden");
+    hideAll();
+    qs("stages").classList.remove("hidden");
     updateStageCards();
   }
 
@@ -886,6 +955,7 @@
     if(next >= DATA[currentStage].length){
       qs("flowSub").textContent = "Etapa completa ✅ Puedes volver o pasar a la siguiente.";
     }
+    updateStageCards();
   }
 
   function nextIndex(flow){
@@ -952,9 +1022,28 @@
       const s = stageStatus(currentRoom, stage);
       const badge = qs("badge_"+stage);
       const bar = qs("bar_"+stage);
-      badge.textContent = s.label;
-      badge.className = "pill " + (s.kind ? s.kind : "");
-      bar.style.width = stagePercent(currentRoom, stage) + "%";
+      if(badge){
+        badge.textContent = s.label;
+        badge.className = "pill " + (s.kind ? s.kind : "");
+      }
+      if(bar){
+        bar.style.width = stagePercent(currentRoom, stage) + "%";
+      }
+
+      const navBadge = qs("nav_badge_"+stage);
+      const navBar = qs("nav_bar_"+stage);
+      if(navBadge){
+        navBadge.textContent = s.label;
+        navBadge.className = "pill " + (s.kind ? s.kind : "");
+      }
+      if(navBar){
+        navBar.style.width = stagePercent(currentRoom, stage) + "%";
+      }
+    });
+
+    document.querySelectorAll(".stage-nav .stage").forEach((el)=>{
+      const isActive = el.dataset.stage === currentStage;
+      el.classList.toggle("active", isActive);
     });
   }
 
