@@ -158,6 +158,9 @@
     gap:10px;
     flex-wrap:wrap;
   }
+  .btn-full{
+    width:100%;
+  }
   .btn-primary{
     border-color: rgba(255,255,255,.22);
     background:
@@ -433,6 +436,9 @@
   .actions .decline .icon{
     background: linear-gradient(180deg, rgba(255,208,70,.98), rgba(245,158,11,.95));
   }
+  .actions .dimmed{
+    opacity: .38;
+  }
 
   .badge{
     margin-top: 10px;
@@ -622,7 +628,7 @@
           <div class="divider"></div>
 
           <div class="btn-row">
-            <button class="btn-ghost" onclick="goHome()">Volver</button>
+            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
           </div>
         </div>
       </div>
@@ -692,6 +698,7 @@
             <div class="sub" id="flowSub">Marca una opción y se habilita el siguiente ítem (flujo guiado).</div>
           </div>
           <div class="row">
+            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
             <button class="btn-ghost" onclick="resetStage()">Reiniciar etapa</button>
           </div>
         </div>
@@ -741,7 +748,7 @@
           <div class="divider"></div>
 
           <div class="btn-row">
-            <button class="btn-ghost" onclick="backToStages()">Volver</button>
+            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
           </div>
         </div>
       </div>
@@ -947,11 +954,11 @@
       d.innerHTML = `
         <strong>${escapeHtml(t)}</strong>
         <div class="actions">
-          <button class="accept" onclick="setState(${i},'ok')">
+          <button class="accept ${state === 'no' ? 'dimmed' : ''}" onclick="setState(${i},'ok')">
             <span class="icon">✓</span>
             <span>Aceptado</span>
           </button>
-          <button class="decline" onclick="setState(${i},'no')">
+          <button class="decline ${state === 'ok' ? 'dimmed' : ''}" onclick="setState(${i},'no')">
             <span class="icon"></span>
             <span>No aceptó</span>
           </button>
@@ -961,7 +968,6 @@
           state !== "new"
           ? `<div class="badge ${state==='ok'?'ok':'warn'}">
               <span class="dot"></span>
-              ${state==='ok' ? "Marcado: aceptado" : "Marcado: no aceptó"}
             </div>`
           : `<div class="badge"><span class="dot"></span>Pendiente</div>`
         }
