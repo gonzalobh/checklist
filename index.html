@@ -750,6 +750,7 @@
     qs("roomTitle").textContent = room;
     hideAll();
     qs("stages").classList.remove("hidden");
+    qs("flow").classList.add("hidden");
     updateStageCards();
   }
 
@@ -819,6 +820,7 @@
   function openStage(stage){
     currentStage = stage;
     hideAll();
+    qs("stages").classList.remove("hidden");
     qs("flowTitle").textContent =
       (stage === "checkin" ? "Check-in" : stage === "stay" ? "Estadía" : "Check-out")
       + " — Hab. " + currentRoom;
@@ -829,8 +831,7 @@
   }
 
   function backToStages(){
-    hideAll();
-    qs("stages").classList.remove("hidden");
+    qs("flow").classList.add("hidden");
     updateStageCards();
   }
 
