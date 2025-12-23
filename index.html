@@ -420,6 +420,10 @@
     box-shadow: var(--shadow2);
     position:relative;
     overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 18px;
   }
   .item.dim{
     opacity: .40;
@@ -440,23 +444,29 @@
   }
   .item strong{
     display:block;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 800;
-    letter-spacing: .1px;
-    margin-bottom: 10px;
+    letter-spacing: .2px;
   }
-  .actions{
+  .item-sub{
+    font-size: 15px;
+    color: rgba(243,245,248,.65);
+    font-style: italic;
+  }
+  body.light .item-sub{
+    color: rgba(30,41,59,.70);
+  }
+  .item-actions{
     display:flex;
-    gap:10px;
+    gap:12px;
     flex-wrap:wrap;
   }
-  .actions button{
-    flex:1;
-    min-width: 160px;
+  .item-actions button{
     padding: 10px 18px;
     border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.35);
     box-shadow:none;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: .2px;
     display:flex;
     align-items:center;
@@ -484,28 +494,29 @@
     color: #0f5132;
     border-color: rgba(22,163,74,.40);
   }
-  .actions .accept .icon{
-    color: #0f3b22;
-    background: linear-gradient(180deg, rgba(84,255,169,.95), rgba(34,197,94,.95));
+  body.light .item-actions button{
+    color: rgba(15,23,42,.75);
+    border-color: rgba(15,23,42,.20);
   }
-  .actions .decline{
-    color: rgba(255,233,196,.95);
-    border-color: rgba(245,158,11,.45);
-    box-shadow: inset 0 0 0 1px rgba(245,158,11,.18);
-  
+  .item-actions button.active{
+    border-color: rgba(255,255,255,.85);
+    color: rgba(255,255,255,.92);
   }
-  body.light .actions .decline{
-    color: #7c4a03;
-    border-color: rgba(217,119,6,.45);
+  body.light .item-actions button.active{
+    border-color: rgba(15,23,42,.55);
+    color: #0f172a;
   }
-  .actions .decline .icon{
-    background: linear-gradient(180deg, rgba(255,208,70,.98), rgba(245,158,11,.95));
+  .item-actions button.accepted{
+    border-color: rgba(34,197,94,.90);
+    color: rgba(129,255,186,.95);
+    box-shadow: 0 0 0 1px rgba(34,197,94,.20);
   }
-  .actions .dimmed{
-    opacity: .38;
+  body.light .item-actions button.accepted{
+    border-color: rgba(22,163,74,.60);
+    color: #166534;
   }
-  body.light .actions .dimmed{
-    opacity: .6;
+  .item-actions button.muted{
+    color: rgba(243,245,248,.45);
   }
 
   .badge{
@@ -521,8 +532,6 @@
     background: var(--panel2);
     border: 1px solid var(--border);
   }
-  .badge.ok .dot{ background: rgba(34,197,94,.70); border-color: rgba(34,197,94,.35); }
-  .badge.warn .dot{ background: rgba(245,158,11,.80); border-color: rgba(245,158,11,.35); }
 
   /* Toast */
   .toast{
@@ -835,22 +844,22 @@
 <script>
   const DATA = {
     checkin: [
-      "¿Viaje de trabajo o descanso?",
-      "Ofrecer upgrade de habitación",
-      "Ofrecer desayuno",
-      "Estacionamiento o traslado"
+      { title: "¿Viaje de trabajo o descanso?", hint: "Personaliza la estadía" },
+      { title: "Ofrecer upgrade de habitación", hint: "Mejora la experiencia" },
+      { title: "Ofrecer desayuno", hint: "Empieza el día fácil" },
+      { title: "Estacionamiento o traslado", hint: "Evita preocupaciones" }
     ],
     stay: [
-      "¿Todo bien con la habitación?",
-      "Ofrecer late check-out",
-      "Invitar a bar o restaurante",
-      "Experiencia o tour"
+      { title: "¿Todo bien con la habitación?", hint: "Confirma comodidad" },
+      { title: "Ofrecer late check-out", hint: "Cierra con calma" },
+      { title: "Invitar a bar o restaurante", hint: "Momento perfecto" },
+      { title: "Experiencia o tour", hint: "Recuerdos únicos" }
     ],
     checkout: [
-      "¿Cómo estuvo la estadía?",
-      "Late check-out hoy",
-      "Reservar directo",
-      "Pedir reseña"
+      { title: "¿Cómo estuvo la estadía?", hint: "Escucha y aprende" },
+      { title: "Late check-out hoy", hint: "Última oportunidad" },
+      { title: "Reservar directo", hint: "Beneficio inmediato" },
+      { title: "Pedir reseña", hint: "Impulsa la reputación" }
     ]
   };
 
@@ -1022,31 +1031,21 @@
 
     const flow = (guests[currentRoom].flows[currentStage] || {});
 
-    DATA[currentStage].forEach((t,i)=>{
+    DATA[currentStage].forEach((item,i)=>{
       const state = flow[i] || "new";
 
       const d = document.createElement("div");
       d.className = "item";
       d.innerHTML = `
-        <strong>${escapeHtml(t)}</strong>
-        <div class="actions">
-          <button class="accept ${state === 'no' ? 'dimmed' : ''}" onclick="setState(${i},'ok')">
-            <span class="icon">✓</span>
-            <span>Aceptado</span>
-          </button>
-          <button class="decline ${state === 'ok' ? 'dimmed' : ''}" onclick="setState(${i},'no')">
-            <span class="icon"></span>
-            <span>No aceptó</span>
-          </button>
+        <div class="item-text">
+          <strong>${escapeHtml(item.title)}</strong>
+          <span class="item-sub">“${escapeHtml(item.hint)}”</span>
         </div>
-
-        ${
-          state !== "new"
-          ? `<div class="badge ${state==='ok'?'ok':'warn'}">
-              <span class="dot"></span>
-            </div>`
-          : `<div class="badge"><span class="dot"></span>Pendiente</div>`
-        }
+        <div class="item-actions">
+          <button class="${state === 'no' ? 'active' : 'muted'}" onclick="setState(${i},'no')">No ofrecido</button>
+          <button class="${state === 'offered' ? 'active' : ''}" onclick="setState(${i},'offered')">Ofrecido</button>
+          <button class="accepted ${state === 'accepted' ? 'active' : ''}" onclick="setState(${i},'accepted')">Aceptado</button>
+        </div>
       `;
       wrap.appendChild(d);
     });
@@ -1065,8 +1064,9 @@
     const flow = guests[currentRoom].flows[currentStage];
     flow[i] = val;
     save();
-    if(val === "ok") toast("Aceptado");
-    else toast("No aceptó");
+    if(val === "accepted") toast("Aceptado");
+    else if(val === "offered") toast("Ofrecido");
+    else toast("No ofrecido");
     renderFlow();
   }
 
