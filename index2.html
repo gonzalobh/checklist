@@ -7,47 +7,47 @@
 
 <style>
   :root{
-    --bg0:#1f1f1f;
-    --bg1:#1f1f1f;
-    --panel:#262626;
-    --panel2:#2c2c2c;
-    --border:#3a3a3a;
-    --border2:#4a4a4a;
+    --bg0:#171717;
+    --bg1:#1c1c1c;
+    --panel:#202020;
+    --panel2:#242424;
+    --border:#2e2e2e;
+    --border2:#3a3a3a;
     --text:#f5f5f5;
-    --muted:#b3b3b3;
-    --muted2:#8c8c8c;
+    --muted:#b5b5b5;
+    --muted2:#8f8f8f;
 
     --ok:#22c55e;
     --warn:#f59e0b;
     --bad:#ef4444;
 
-    --shadow: 0 8px 24px rgba(0,0,0,.35);
-    --shadow2: 0 4px 12px rgba(0,0,0,.25);
-    --radius: 12px;
-    --radius2: 10px;
+    --shadow: 0 10px 24px rgba(0,0,0,.30);
+    --shadow2: 0 3px 10px rgba(0,0,0,.20);
+    --radius: 14px;
+    --radius2: 12px;
 
-    --focus: 0 0 0 3px rgba(83,155,245,.35);
+    --focus: 0 0 0 3px rgba(83,155,245,.30);
   }
 
   body.light{
-    --bg0:#f7f6f3;
-    --bg1:#f7f6f3;
+    --bg0:#f6f6f5;
+    --bg1:#ffffff;
     --panel:#ffffff;
-    --panel2:#ffffff;
-    --border:#e6e5e2;
-    --border2:#d6d5d2;
-    --text:#2f3437;
-    --muted:#6b6f76;
-    --muted2:#9aa0a6;
+    --panel2:#fbfbfb;
+    --border:#e3e3e3;
+    --border2:#d4d4d4;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --muted2:#9ca3af;
 
     --ok:#16a34a;
     --warn:#d97706;
     --bad:#dc2626;
 
-    --shadow: 0 6px 18px rgba(15,23,42,.10);
-    --shadow2: 0 3px 10px rgba(15,23,42,.10);
+    --shadow: 0 10px 24px rgba(15,23,42,.08);
+    --shadow2: 0 4px 12px rgba(15,23,42,.08);
 
-    --focus: 0 0 0 3px rgba(83,155,245,.25);
+    --focus: 0 0 0 3px rgba(83,155,245,.20);
   }
 
   *{ box-sizing:border-box; }
@@ -58,6 +58,7 @@
     color: var(--text);
     background: var(--bg0);
     letter-spacing: .1px;
+    line-height: 1.35;
   }
 
   body.light{
@@ -67,9 +68,9 @@
   .hidden{ display:none; }
 
   .app{
-    max-width: 1120px;
+    max-width: 980px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 24px;
   }
 
   /* Top bar */
@@ -78,23 +79,23 @@
     align-items:center;
     justify-content:space-between;
     gap:12px;
-    margin: 4px 0 16px;
+    margin: 4px 0 18px;
   }
   .brand{
     display:flex;
     align-items:center;
     gap:10px;
-    min-width: 220px;
+    min-width: 200px;
   }
   .logo{
-    width:38px; height:38px;
+    width:34px; height:34px;
     border-radius: 10px;
-    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-    border: 1px solid var(--border);
+    background: linear-gradient(160deg, rgba(83,155,245,.35), rgba(83,155,245,.05));
+    border: 1px solid rgba(83,155,245,.35);
     box-shadow: var(--shadow2);
   }
   .brand h1{
-    font-size: 14px;
+    font-size: 15px;
     margin:0;
     font-weight: 700;
     letter-spacing: .4px;
@@ -114,7 +115,6 @@
     border-radius: 999px;
     border: 1px solid var(--border);
     background: var(--panel);
-    box-shadow: var(--shadow2);
   }
   .theme-toggle span{
     font-size: 12px;
@@ -197,7 +197,7 @@
   .sub{
     margin-top:6px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.35;
   }
 
@@ -211,17 +211,16 @@
     border: 1px solid var(--border);
     color: var(--text);
     background: var(--panel2);
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 12px 16px;
+    border-radius: 999px;
     font-size: 14px;
     font-weight: 650;
     cursor:pointer;
     transition: transform .08s ease, border-color .15s ease, background .15s ease, opacity .15s ease;
-    box-shadow: var(--shadow2);
   }
   button:hover{ border-color: var(--border2); }
   button:active{ transform: translateY(1px); }
-  button:focus{ outline:none; box-shadow: var(--shadow2), var(--focus); }
+  button:focus{ outline:none; box-shadow: var(--focus); }
 
   .btn-row{
     display:flex;
@@ -232,8 +231,8 @@
     width:100%;
   }
   .btn-primary{
-    border-color: rgba(83,155,245,.45);
-    background: rgba(83,155,245,.18);
+    border-color: rgba(83,155,245,.55);
+    background: rgba(83,155,245,.22);
   }
   .btn-ghost{
     background: transparent;
@@ -259,13 +258,12 @@
   }
   input{
     width:100%;
-    padding: 12px 12px;
+    padding: 12px 14px;
     font-size: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--panel);
     color: var(--text);
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
   }
   input::placeholder{ color: var(--muted2); }
   input:focus{
@@ -295,7 +293,6 @@
     border: 1px solid var(--border);
     background: var(--panel);
     padding: 12px;
-    box-shadow: var(--shadow2);
   }
   .guest-top{
     display:flex;
@@ -347,9 +344,8 @@
   .guest-actions button{
     flex:1;
     padding: 10px 12px;
-    border-radius: 12px;
+    border-radius: 999px;
     font-size: 13px;
-    box-shadow:none;
   }
 
   /* Stages */
@@ -366,7 +362,6 @@
     border: 1px solid var(--border);
     cursor:pointer;
     background: var(--panel);
-    box-shadow: var(--shadow2);
     transition: transform .08s ease, border-color .15s ease;
   }
   .stage:hover{ border-color: var(--border2); }
@@ -392,8 +387,8 @@
   }
 
   .progress{
-    margin-top: 12px;
-    height: 10px;
+    margin-top: 10px;
+    height: 8px;
     border-radius: 999px;
     background: rgba(255,255,255,.06);
     border: 1px solid var(--border);
@@ -417,7 +412,6 @@
     border-radius: 16px;
     border: 1px solid var(--border);
     background: var(--panel);
-    box-shadow: var(--shadow2);
     position:relative;
     overflow:hidden;
     display:flex;
@@ -444,28 +438,26 @@
   }
   .item strong{
     display:block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
     letter-spacing: .2px;
   }
   .item-sub{
-    font-size: 15px;
+    font-size: 12px;
     color: rgba(243,245,248,.65);
-    font-style: italic;
   }
   body.light .item-sub{
     color: rgba(30,41,59,.70);
   }
   .item-actions{
     display:flex;
-    gap:12px;
+    gap:8px;
     flex-wrap:wrap;
   }
   .item-actions button{
-    padding: 10px 18px;
+    padding: 9px 16px;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,.35);
-    box-shadow:none;
     font-weight: 700;
     letter-spacing: .2px;
     display:flex;
@@ -576,7 +568,7 @@
   /* Flow layout */
   .flow-layout{
     display:grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 240px 1fr;
     gap: 16px;
   }
   @media (max-width: 900px){
@@ -590,11 +582,11 @@
     gap: 12px;
   }
   .stage-nav .stage{
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), var(--shadow2);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
   }
   .stage-nav .stage.active{
     border-color: rgba(83,155,245,.45);
-    box-shadow: 0 0 0 1px rgba(83,155,245,.25), var(--shadow);
+    box-shadow: 0 0 0 1px rgba(83,155,245,.25), var(--shadow2);
   }
   .flow-main{
     display:flex;
@@ -614,8 +606,8 @@
       <div class="brand">
         <div class="logo"></div>
         <div>
-          <h1>Recepción</h1>
-          <p>Checklist guiado para vender más (sin campos ni complicaciones)</p>
+      <h1>Recepción</h1>
+      <p>Flujo simple y rápido</p>
         </div>
       </div>
 
@@ -627,7 +619,7 @@
             <span class="slider"></span>
           </label>
         </div>
-        <button class="btn-ghost" onclick="hardReset()">Reiniciar todo</button>
+        <button class="btn-ghost" onclick="hardReset()">Reset</button>
       </div>
     </div>
 
@@ -636,15 +628,15 @@
       <div id="home">
         <div class="header">
           <div>
-            <h2>Inicio</h2>
-            <div class="sub">Elige una acción. La idea es que sea <b>rápido, repetible y controlable</b>.</div>
+            <h2>Inicio rápido</h2>
+            <div class="sub">Elige y continúa.</div>
           </div>
         </div>
 
         <div class="content">
           <div class="btn-row">
-            <button class="btn-primary" onclick="showNew()">+ Nuevo huésped</button>
-            <button onclick="showSearch()">Buscar habitación</button>
+            <button class="btn-primary" onclick="showNew()">Nuevo</button>
+            <button onclick="showSearch()">Buscar</button>
           </div>
 
           <div class="divider"></div>
@@ -652,15 +644,15 @@
           <div class="kpi">
             <div class="box">
               <b id="kpiActive">0</b>
-              <span>Huéspedes activos</span>
+              <span>Activos</span>
             </div>
             <div class="box">
               <b id="kpiToday">—</b>
-              <span>Hoy (solo referencia)</span>
+              <span>Hoy</span>
             </div>
             <div class="box">
               <b id="kpiTips">2s</b>
-              <span>Tiempo objetivo por acción</span>
+              <span>Objetivo</span>
             </div>
           </div>
         </div>
@@ -670,8 +662,8 @@
       <div id="newGuest" class="hidden">
         <div class="header">
           <div>
-            <h3>Nuevo huésped</h3>
-            <div class="sub">Solo escribe la habitación. Sin nombre. Sin fricción.</div>
+            <h3>Nueva habitación</h3>
+            <div class="sub">Solo número de habitación.</div>
           </div>
         </div>
 
@@ -682,12 +674,12 @@
           </div>
 
           <div class="btn-row">
-            <button class="btn-primary" onclick="createGuest()">Crear y entrar</button>
+            <button class="btn-primary" onclick="createGuest()">Crear</button>
             <button class="btn-ghost" onclick="goHome()">Cancelar</button>
           </div>
 
           <div class="sub" style="margin-top:12px;">
-            Tip: si la habitación ya existe, te llevará a esa ficha para continuar.
+            Si ya existe, se abre la ficha.
           </div>
         </div>
       </div>
@@ -696,15 +688,15 @@
       <div id="search" class="hidden">
         <div class="header">
           <div>
-            <h3>Huéspedes activos</h3>
-            <div class="sub">Busca por habitación y entra con 1 click.</div>
+            <h3>Activos</h3>
+            <div class="sub">Busca por habitación.</div>
           </div>
         </div>
 
         <div class="content">
           <div class="field">
-            <label>Buscar</label>
-            <input id="searchInput" placeholder="Escribe: 101, 205, 12..." oninput="renderGuestList()">
+            <label>Habitación</label>
+            <input id="searchInput" placeholder="101, 205, 12..." oninput="renderGuestList()">
           </div>
 
           <div id="guestList" class="list"></div>
@@ -712,7 +704,7 @@
           <div class="divider"></div>
 
           <div class="btn-row">
-            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
+            <button class="btn-ghost btn-full" onclick="goHome()">Inicio</button>
           </div>
         </div>
       </div>
@@ -721,11 +713,11 @@
       <div id="stages" class="hidden">
         <div class="header">
           <div>
-            <h3>Habitación <span id="roomTitle" style="opacity:.92"></span></h3>
-            <div class="sub">Entra a una etapa. El sistema te marca progreso y qué falta.</div>
+            <h3>Hab. <span id="roomTitle" style="opacity:.92"></span></h3>
+            <div class="sub">Elige etapa y marca avances.</div>
           </div>
           <div class="row">
-            <button class="btn-danger" onclick="deleteCurrent()">Borrar huésped</button>
+            <button class="btn-danger" onclick="deleteCurrent()">Borrar</button>
           </div>
         </div>
 
@@ -735,7 +727,7 @@
               <div class="stage-top">
                 <div>
                   <h4>Check-in</h4>
-                  <p>Primer minuto = más ventas. Guion corto, sin pensar.</p>
+                  <p>Inicio rápido.</p>
                 </div>
                 <div id="badge_checkin" class="pill">Pendiente</div>
               </div>
@@ -746,7 +738,7 @@
               <div class="stage-top">
                 <div>
                   <h4>Estadía</h4>
-                  <p>Upsell suave. Detecta oportunidades sin molestar.</p>
+                  <p>Seguimiento.</p>
                 </div>
                 <div id="badge_stay" class="pill">Pendiente</div>
               </div>
@@ -757,7 +749,7 @@
               <div class="stage-top">
                 <div>
                   <h4>Check-out</h4>
-                  <p>Cierra ventas futuras: directo + reseña + retorno.</p>
+                  <p>Cierre.</p>
                 </div>
                 <div id="badge_checkout" class="pill">Pendiente</div>
               </div>
@@ -768,8 +760,8 @@
           <div class="divider"></div>
 
           <div class="btn-row">
-            <button class="btn-ghost" onclick="showSearch()">Cambiar habitación</button>
-            <button class="btn-ghost" onclick="goHome()">Salir</button>
+            <button class="btn-ghost" onclick="showSearch()">Cambiar</button>
+            <button class="btn-ghost" onclick="goHome()">Inicio</button>
           </div>
         </div>
       </div>
@@ -779,11 +771,11 @@
         <div class="header">
           <div>
             <h3 id="flowTitle"></h3>
-            <div class="sub" id="flowSub">Marca una opción y se habilita el siguiente ítem (flujo guiado).</div>
+            <div class="sub" id="flowSub">Marca estado por ítem.</div>
           </div>
           <div class="row">
-            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
-            <button class="btn-ghost" onclick="resetStage()">Reiniciar etapa</button>
+            <button class="btn-ghost btn-full" onclick="goHome()">Inicio</button>
+            <button class="btn-ghost" onclick="resetStage()">Reiniciar</button>
           </div>
         </div>
 
@@ -794,7 +786,7 @@
                 <div class="stage-top">
                   <div>
                     <h4>Check-in</h4>
-                    <p>Empieza bien la conversación.</p>
+                    <p>Inicio.</p>
                   </div>
                   <div id="nav_badge_checkin" class="pill">Pendiente</div>
                 </div>
@@ -805,7 +797,7 @@
                 <div class="stage-top">
                   <div>
                     <h4>Estadía</h4>
-                    <p>Ventas fáciles sin presión.</p>
+                    <p>Seguimiento.</p>
                   </div>
                   <div id="nav_badge_stay" class="pill">Pendiente</div>
                 </div>
@@ -816,7 +808,7 @@
                 <div class="stage-top">
                   <div>
                     <h4>Check-out</h4>
-                    <p>Última oportunidad de cierre.</p>
+                    <p>Cierre.</p>
                   </div>
                   <div id="nav_badge_checkout" class="pill">Pendiente</div>
                 </div>
@@ -832,7 +824,7 @@
           <div class="divider"></div>
 
           <div class="btn-row">
-            <button class="btn-ghost btn-full" onclick="goHome()">Volver</button>
+            <button class="btn-ghost btn-full" onclick="goHome()">Inicio</button>
           </div>
         </div>
       </div>
@@ -1003,7 +995,7 @@
       (stage === "checkin" ? "Check-in" : stage === "stay" ? "Estadía" : "Check-out")
       + " — Hab. " + currentRoom;
 
-    qs("flowSub").textContent = "Marca los ítems en el orden que prefieras.";
+    qs("flowSub").textContent = "Marca estado por ítem.";
     renderFlow();
     updateStageCards();
     qs("flow").classList.remove("hidden");
@@ -1039,10 +1031,10 @@
       d.innerHTML = `
         <div class="item-text">
           <strong>${escapeHtml(item.title)}</strong>
-          <span class="item-sub">“${escapeHtml(item.hint)}”</span>
+          <span class="item-sub">${escapeHtml(item.hint)}</span>
         </div>
         <div class="item-actions">
-          <button class="${state === 'no' ? 'active' : 'muted'}" onclick="setState(${i},'no')">No ofrecido</button>
+          <button class="${state === 'no' ? 'active' : 'muted'}" onclick="setState(${i},'no')">No</button>
           <button class="${state === 'offered' ? 'active' : ''}" onclick="setState(${i},'offered')">Ofrecido</button>
           <button class="accepted ${state === 'accepted' ? 'active' : ''}" onclick="setState(${i},'accepted')">Aceptado</button>
         </div>
@@ -1052,9 +1044,9 @@
 
     const completed = DATA[currentStage].every((_, i) => flow[i]);
     if(completed){
-      qs("flowSub").textContent = "Etapa completa ✅ Puedes volver o pasar a la siguiente.";
+      qs("flowSub").textContent = "Etapa completa ✅";
     } else {
-      qs("flowSub").textContent = "Marca los ítems en el orden que prefieras.";
+      qs("flowSub").textContent = "Marca estado por ítem.";
     }
     updateStageCards();
   }
